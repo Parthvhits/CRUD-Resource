@@ -8,7 +8,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <style>
-          .has-error-cstm{color: red;}
+          .has-error-cstm,.already-exist{color: red;}
         </style>
     </head>
 <body>
@@ -33,6 +33,7 @@
     <label for="contactno"><b>Contact No</b></label>
     <input type="text" name="phone" id="contactno" class="form-control">
     <span class="has-error-cstm"> {{$errors->first('phone')}}</span>
+    <span class="already-exist"></span>
     </div>
 
     <div class="form-group">
@@ -56,7 +57,7 @@
     </div>    
 
     <div class="clearfix">
-      <button type="submit" class="btn btn-default signupbtn">Sign Up</button>
+      <button type="button" onclick="submitForm();" class="btn btn-default signupbtn">Sign Up</button>
     </div>
 </form>
 </div>
@@ -66,5 +67,30 @@
 <script type="text/javascript" src="{{ url('assets/libs/dropzone/min/dropzone.min.js')}}"></script>
 <script type="text/javascript" src="{{ url('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 {!! $validator->selector('#user_add') !!}
+<script type="text/javascript">
+  function submitForm(){
+    var cno = $('#contactno').val();
+    var _token = $('input[name="_token"]').val();
+    $('.already-exist').html("");
+    $.ajax({
+        method: "POST",
+        url: '{{url('/checkcontact')}}',
+        data: {
+          cno:cno, 
+          _token:_token
+        },
+        success: function(result) {
+            if(result == 1){
+              $('.already-exist').html("The Contact No has already been taken");
+              $('#contactno').focus();
+            }
+            else{
+              $('#user_add').submit();
+            }
+           
+        }   
+    });
+  }
+</script>
 </footer>
 </html>

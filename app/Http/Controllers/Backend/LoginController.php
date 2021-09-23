@@ -42,4 +42,20 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
         return redirect('/');
     }
+
+    public function checkContact(Request $request)
+    {
+        
+        $cno = $request->cno;
+        
+        $data = User::where('phone', $cno)->first();
+        
+        if($data)
+        {
+            echo 1;
+        }
+        else{
+            echo 0;
+        }
+    }
 }
