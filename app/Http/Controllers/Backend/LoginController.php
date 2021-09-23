@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use JsValidator;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -19,18 +20,19 @@ class LoginController extends Controller
     ];
     public function index(Request $request)
     {
-        $validator = JsValidator::make($this->validationRules);
-        return view('Backend.User.login')->with(['validator' => $validator]);
+        $this->data['validator'] = JsValidator::make($this->validationRules);
+        return view('Backend.User.login',$this->data);
     }
 
     public function login(Request $request){
         $credentials = $request->only('email', 'password');
+        $validation = Validator::make($credentials, $this->validationRules);
         if (Auth::attempt($credentials)) {
             $users = User::all();
             return redirect('/user');   
         }
         else {
-            return redirect()->back();   
+            return redirect()->back()->withErrors($validation->errors());
         }
     }
 

@@ -39,8 +39,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $validator = JsValidator::make($this->validationRules);
-        return view('Backend.User.add')->with(['validator' => $validator]);
+        $this->data['validator'] = JsValidator::make($this->validationRules);
+        return view('Backend.User.add',$this->data);
     }
 
     /**
@@ -95,6 +95,10 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validation = Validator::make($request->all(), $this->validationRules);
+        if ($validation->fails()) {
+            return redirect()->back()->withErrors($validation->errors());
+        }
         $input = $request->all();
         $users = User::find($id);
         $users->user_name = $input['user_name'];
@@ -114,12 +118,12 @@ class UserController extends Controller
     public function destroy($id)
     {
         $auth = Auth::user();
-        $user_id = User::find($id);
+       
         $deleteArray = array(
             'deleted_at' => date('Y-m-d H:i:s'),
             'deleted_by' => $auth->id
         );
-        $update = User::where('id',$user_id->id)->update($deleteArray);
+        $update = User::where('id',$id)->update($deleteArray);
         return redirect('/');
     }
 }

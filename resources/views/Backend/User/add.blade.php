@@ -7,38 +7,42 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <style>
+          .has-error-cstm{color: red;}
+        </style>
     </head>
 <body>
 <div class="container">
 <form action="{{route('user.store')}}" method="post" id="user_add">
     @csrf
+    {{ method_field('POST') }}
     <h1>Add User</h1>
     <div class="form-group">
     <label for="uname"><b>User Name</b></label>
     <input type="text" name="user_name" id="uname" class="form-control">
-    <span style="color: red;"> {{$errors->first('user_name')}}</span>
+    <span class="has-error-cstm"> {{$errors->first('user_name')}}</span>
     </div>
     
     <div class="form-group">
     <label for="email"><b>Email</b></label>
     <input type="email" id="email-add" name="email" class="form-control">
-    <span style="color: red;"> {{$errors->first('email')}}</span>
+    <span class="has-error-cstm"> {{$errors->first('email')}}</span>
     </div>  
 
     <div class="form-group">
     <label for="contactno"><b>Contact No</b></label>
     <input type="text" name="phone" id="contactno" class="form-control">
-    <span style="color: red;"> {{$errors->first('phone')}}</span>
+    <span class="has-error-cstm"> {{$errors->first('phone')}}</span>
     </div>
 
     <div class="form-group">
     <strong>Gender</strong>
     <div class="form-check">
-      <input class="form-check-input" type="radio" name="gender" id="exampleRadios1" value="male" checked>
+      <input class="form-check-input" type="radio" name="gender" id="male" value="male" checked>
       <label class="form-check-label" for="gender">
       Male
       </label>
-      <input class="form-check-input" type="radio" name="gender" id="exampleRadios2" value="female">
+      <input class="form-check-input" type="radio" name="gender" id="female" value="female">
       <label class="form-check-label" for="gender">
       Female
       </label>
@@ -48,7 +52,7 @@
     <div class="form-group">
     <label for="psw"><b>Password</b></label>
     <input type="password" name="password" class="form-control">
-    <span style="color: red;"> {{$errors->first('password')}}</span>
+    <span class="has-error-cstm"> {{$errors->first('password')}}</span>
     </div>    
 
     <div class="clearfix">
