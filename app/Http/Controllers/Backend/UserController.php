@@ -20,6 +20,12 @@ class UserController extends Controller
         'gender' => 'required',
         'password' => 'required',
     ];
+    protected $validationRulesUpdate = [
+        'user_name' => 'required|string|max:255',
+        'email' => 'required|email',
+        'phone' => 'required|digits:10',
+        'gender' => 'required',
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -95,18 +101,20 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validation = Validator::make($request->all(), $this->validationRules);
+        $validation = Validator::make($request->all(), $this->validationRulesUpdate);
         if ($validation->fails()) {
             return redirect()->back()->withErrors($validation->errors());
         }
-        $input = $request->all();
-        $users = User::find($id);
-        $users->user_name = $input['user_name'];
-        $users->email = $input['email'];
-        $users->phone = $input['phone'];
-        $users->gender = $input['gender']; 
-        $users->save();
-        return redirect('/user');
+        else{
+            $input = $request->all();
+            $users = User::find($id);
+            $users->user_name = $input['user_name'];
+            $users->email = $input['email'];
+            $users->phone = $input['phone'];
+            $users->gender = $input['gender']; 
+            $users->save();
+            return redirect('/user');
+        }
     }
 
     /**
