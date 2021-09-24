@@ -26,5 +26,5 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/checkcontact', [LoginController::class, 'checkContact'])->name('checkcontact');
 Route::post('/checkcontactedit', [LoginController::class, 'checkContactEdit'])->name('checkcontactedit');
-Route::post('/checkemailedit', [LoginController::class, 'checkEmailEdit'])->name('checkemailedit');
 Route::post('/checkemail', [LoginController::class, 'checkEmail'])->name('checkemail');
+Route::post('/checkemailedit', [LoginController::class, 'checkEmailEdit'])->name('checkemailedit');

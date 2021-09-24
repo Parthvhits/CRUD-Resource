@@ -46,4 +46,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function CheckContactRegister($cno)
+    {
+        $query = User::where('phone', $cno)->first();
+        return $query;
+    }
+
+    public static function CheckContactEdit($cno,$id)
+    {
+        $query = User::where('id', '!=', $id)->where('phone', '=', $cno)->first();
+        return $query;
+    }
+
+    public static function CheckEmailRegister($email)
+    {
+        $query = User::where('email', $email)->first();
+        return $query;
+    }
+
+    public static function CheckEmailEdit($email,$id)
+    {
+        $query = User::where('id', '!=', $id)->where('email', '=', $email)->first();
+        return $query;
+    }
 }
