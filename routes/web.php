@@ -24,5 +24,5 @@ Route::resource('/user',UserController::class);
 Route::get('/', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-//Route::get('/checkcontact', [LoginController::class, 'checkContact']);
-Route::post('/checkcontact', [LoginController::class, 'checkContact']);
+Route::post('/checkcontact', [LoginController::class, 'checkContact'])->name('checkcontact');
+Route::post('/checkemail', [LoginController::class, 'checkEmail'])->name('checkemail');

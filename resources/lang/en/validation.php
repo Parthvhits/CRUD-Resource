@@ -157,7 +157,8 @@ return [
         'user_name' => 'User Name',
         'email' => 'Email',
         'phone' => 'Contact No',
-        'password' => 'Password'
+        'password' => 'Password',
+        'gender' => 'Gender'
     ],
 
 ];

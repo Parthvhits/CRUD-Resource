@@ -64,7 +64,7 @@ class UserController extends Controller
         $data = $request->all();
         $data['password']=Hash::make($data['password'] );
         User::create($data);
-        return redirect()->route('user.index');
+        return redirect('/');
     }
 
     /**

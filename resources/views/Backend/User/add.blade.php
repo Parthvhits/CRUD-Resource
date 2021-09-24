@@ -8,7 +8,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <style>
-          .has-error-cstm,.already-exist{color: red;}
+          .has-error-cstm,.already-exist,.already-exist-email{color: red;}
         </style>
     </head>
 <body>
@@ -27,6 +27,7 @@
     <label for="email"><b>Email</b></label>
     <input type="email" id="email-add" name="email" class="form-control">
     <span class="has-error-cstm"> {{$errors->first('email')}}</span>
+    <span class="already-exist-email"></span>
     </div>  
 
     <div class="form-group">
@@ -57,40 +58,71 @@
     </div>    
 
     <div class="clearfix">
-      <button type="button" onclick="submitForm();" class="btn btn-default signupbtn">Sign Up</button>
+      <button type="submit" class="btn btn-default signupbtn">Sign Up</button>
     </div>
 </form>
 </div>
 </body>
 <footer>
 <!-- Laravel Javascript Validation -->
-<script type="text/javascript" src="{{ url('assets/libs/dropzone/min/dropzone.min.js')}}"></script>
 <script type="text/javascript" src="{{ url('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 {!! $validator->selector('#user_add') !!}
 <script type="text/javascript">
-  function submitForm(){
+  $('#user_add').submit( function(event) {
     var cno = $('#contactno').val();
+    var email = $('#email-add').val();
     var _token = $('input[name="_token"]').val();
     $('.already-exist').html("");
-    $.ajax({
-        method: "POST",
-        url: '{{url('/checkcontact')}}',
+    $('.already-exist-email').html("");
+
+    var cnt = 0;
+    var f = 0;
+
+    if(cno){
+      $.ajax({
+          async: false,
+          method: "POST",
+          url: '{{route('checkcontact')}}',
+          data: {
+            cno:cno, 
+            _token:_token
+          },
+          success: function(result) {
+              if(result == 1){
+                $('.already-exist').html("The Contact No has already been taken");
+                cnt = 1;
+              }
+              
+          }
+      });
+    }
+    if(email) {
+      $.ajax({
+      async: false,
+      method: "POST",
+        url: '{{route('checkemail')}}',
         data: {
-          cno:cno, 
+          email:email, 
           _token:_token
         },
         success: function(result) {
-            if(result == 1){
-              $('.already-exist').html("The Contact No has already been taken");
-              $('#contactno').focus();
-            }
-            else{
-              $('#user_add').submit();
-            }
-           
-        }   
-    });
-  }
+          if(result == 1){
+            $('.already-exist-email').html("The Email has already been taken");
+            cnt = 1;
+          }
+          
+         
+        }    
+      });
+    }
+    if(cnt == 1)
+    {
+      return false;
+    }
+    else{
+      return true;
+    }
+  });
 </script>
 </footer>
 </html>

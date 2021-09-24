@@ -45,10 +45,21 @@ class LoginController extends Controller
 
     public function checkContact(Request $request)
     {
-        
         $cno = $request->cno;
-        
         $data = User::where('phone', $cno)->first();
+        if($data)
+        {
+            echo 1;
+        }
+        else{
+            echo 0;
+        }
+    }
+
+    public function checkEmail(Request $request)
+    {
+        $email = $request->email;
+        $data = User::where('email', $email)->first();
         
         if($data)
         {

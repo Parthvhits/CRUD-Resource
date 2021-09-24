@@ -57,7 +57,6 @@
 </body>
 <footer>
 <!-- Laravel Javascript Validation -->
-<script type="text/javascript" src="{{ url('assets/libs/dropzone/min/dropzone.min.js')}}"></script>
 <script type="text/javascript" src="{{ url('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 {!! $validator->selector('#user_edit') !!}
 </footer>
