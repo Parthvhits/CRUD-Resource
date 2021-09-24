@@ -56,11 +56,39 @@ class LoginController extends Controller
         }
     }
 
+    public function checkContactEdit(Request $request)
+    {
+        $cno = $request->cno;
+        $id = $request->id;
+        $data = User::where('id', '!=', $id)->where('phone', '=', $cno)->first();
+        if($data)
+        {
+            echo 1;
+        }
+        else{
+            echo 0;
+        }
+    }
+
     public function checkEmail(Request $request)
     {
         $email = $request->email;
         $data = User::where('email', $email)->first();
         
+        if($data)
+        {
+            echo 1;
+        }
+        else{
+            echo 0;
+        }
+    }
+
+    public function checkEmailEdit(Request $request)
+    {
+        $email = $request->email;
+        $id = $request->id;
+        $data = User::where('id', '!=', $id)->where('email', '=', $email)->first();
         if($data)
         {
             echo 1;
