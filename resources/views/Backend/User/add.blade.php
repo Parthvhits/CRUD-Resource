@@ -13,7 +13,7 @@
     </head>
 <body>
 <div class="container">
-<form action="{{route('user.store')}}" method="post" id="user_add">
+<form action="{{route('store')}}" method="post" id="user_add">
     @csrf
     {{ method_field('POST') }}
     <h1>Add User</h1>

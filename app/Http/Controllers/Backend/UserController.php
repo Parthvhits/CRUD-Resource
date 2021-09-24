@@ -6,13 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use JsValidator;
 use App\Models\User;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    /**
+     * Instantiate a new UserController instance.
+     */
+    public function __construct()
+    {
+    }
+
     protected $validationRules = [
         'user_name' => 'required|string|max:255',
         'email' => 'required|email',
@@ -45,8 +50,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->data['validator'] = JsValidator::make($this->validationRules);
-        return view('Backend.User.add',$this->data);
+
     }
 
     /**
@@ -57,14 +61,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = Validator::make($request->all(), $this->validationRules);
-        if ($validation->fails()) {
-            return redirect()->back()->withErrors($validation->errors());
-        }
-        $data = $request->all();
-        $data['password']=Hash::make($data['password'] );
-        User::create($data);
-        return redirect('/');
+        
     }
 
     /**
@@ -132,6 +129,6 @@ class UserController extends Controller
             'deleted_by' => $auth->id
         );
         $update = User::where('id',$id)->update($deleteArray);
-        return redirect('/');
+        return redirect('/logout');
     }
 }

@@ -20,8 +20,13 @@ use Illuminate\Support\Facades\Auth;
 //     return view('welcome');
 // });
 Auth::routes();
-Route::resource('/user',UserController::class);
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('/user',UserController::class);
+});
 Route::get('/', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::get('/create', [LoginController::class, 'create'])->name('create');
+Route::post('/store', [LoginController::class, 'store'])->name('store');
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/checkcontact', [LoginController::class, 'checkContact'])->name('checkcontact');

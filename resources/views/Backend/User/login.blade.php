@@ -35,7 +35,7 @@
                 <button type="submit" class="btn btn-default signupbtn">Login</button>
             </div>
         </form>
-        <a href="{{route('user.create')}}">Register Here</a>
+        <a href="{{route('create')}}">Register Here</a>
     </div>
 </body>
 <footer>

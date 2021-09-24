@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use JsValidator;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
@@ -34,6 +35,22 @@ class LoginController extends Controller
         else {
             return redirect()->back()->withErrors($validation->errors());
         }
+    }
+
+    public function create(){
+        $this->data['validator'] = JsValidator::make($this->validationRules);
+        return view('Backend.User.add',$this->data);
+    }
+
+    public function store(Request $request){
+        $validation = Validator::make($request->all(), $this->validationRules);
+        if ($validation->fails()) {
+            return redirect()->back()->withErrors($validation->errors());
+        }
+        $data = $request->all();
+        $data['password']=Hash::make($data['password'] );
+        User::create($data);
+        return redirect('/');
     }
 
     public function logout(Request $request){
