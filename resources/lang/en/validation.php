@@ -158,7 +158,8 @@ return [
         'email' => 'Email',
         'phone' => 'Contact No',
         'password' => 'Password',
-        'gender' => 'Gender'
+        'gender' => 'Gender',
+        'cpassword' => 'Confirm Password'
     ],
 
 ];

@@ -18,6 +18,7 @@ class LoginController extends Controller
         'phone' => 'required|digits:10',
         'gender' => 'required',
         'password' => 'required',
+        'cpassword' => 'required|same:password',
     ];
     public function index(Request $request)
     {

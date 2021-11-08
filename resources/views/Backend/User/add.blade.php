@@ -55,7 +55,13 @@
     <label for="psw"><b>Password</b></label>
     <input type="password" name="password" class="form-control">
     <span class="has-error-cstm"> {{$errors->first('password')}}</span>
-    </div>    
+    </div>
+    
+    <div class="form-group">
+    <label for="psw"><b>Confirm Password</b></label>
+    <input type="password" name="cpassword" class="form-control">
+    <span class="has-error-cstm"> {{$errors->first('cpassword')}}</span>
+    </div>
 
     <div class="clearfix">
       <button type="submit" class="btn btn-default signupbtn">Sign Up</button>
